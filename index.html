@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* 星宇航空質感配色：深藍、香檳、橘紅 */
             --primary: #1C223A; 
             --secondary: #E5D4B6; 
             --accent: #F44E1C; 
@@ -33,30 +32,16 @@
             transition: font-size 0.3s ease;
         }
 
-        /* 長輩字體放大模式 */
         body.large-font { font-size: 1.25rem; }
         body.large-font .card h3 { font-size: 1.5rem; }
-        body.large-font .tag { font-size: 1rem; }
 
-        header {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(28, 34, 58, 0.85);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
-            color: var(--secondary);
-            border-bottom: 1px solid rgba(229, 212, 182, 0.2);
-        }
+        /* [紅色框修正] 刪除置頂 OKINAWA 2026 橫幅，改為透明狀態 */
+        header { display: none; }
 
-        #font-toggle {
-            background: var(--accent); color: white; border: none;
-            border-radius: 50%; width: 40px; height: 40px; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(244, 78, 28, 0.3);
-        }
-
-        main { padding: 75px 15px 20px; max-width: 500px; margin: 0 auto; }
+        main { padding: 20px 15px; max-width: 500px; margin: 0 auto; }
 
         .banner {
-            width: 100%; height: 180px; border-radius: 20px; overflow: hidden;
+            width: 100%; height: 180px; border-radius: 24px; overflow: hidden;
             margin-bottom: 20px; box-shadow: var(--shadow); position: relative;
         }
         .banner img { width: 100%; height: 100%; object-fit: cover; }
@@ -66,10 +51,10 @@
             padding: 20px; color: white;
         }
 
-        /* 導覽頁籤 */
+        /* [綠色框修正] DAY 按鈕配色切換 */
         .tabs {
             display: flex; overflow-x: auto; gap: 8px; padding-bottom: 15px;
-            position: sticky; top: 64px; z-index: 999; background: transparent;
+            position: sticky; top: 0px; z-index: 999; background: transparent;
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn {
@@ -79,28 +64,40 @@
             color: var(--primary); transition: 0.3s;
         }
         .tab-btn.active {
-            background: var(--primary); color: var(--secondary); transform: scale(1.05);
+            background: var(--accent); color: var(--secondary); transform: scale(1.05);
+            border-color: var(--accent);
         }
 
         .content-section { display: none; animation: fadeIn 0.4s ease; }
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 行程卡片 */
+        /* 天氣卡片 - 無印良品簡約風格 */
+        .weather-card {
+            background: rgba(28, 34, 58, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 50px; padding: 15px 25px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            color: white; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .weather-info { display: flex; align-items: center; gap: 15px; }
+        .weather-temp { font-size: 1.2rem; font-weight: 500; }
+        .weather-icon { font-size: 1.8rem; }
+
         .card {
             background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-radius: 24px;
             padding: 18px; margin-bottom: 20px; box-shadow: var(--shadow);
             position: relative; overflow: hidden;
         }
+
+        /* [綠色框修正] 時間 tag 配色切換 */
         .card-time {
-            display: inline-block; background: var(--primary); color: var(--secondary);
-            padding: 3px 10px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 10px;
+            display: inline-block; background: var(--accent); color: var(--secondary);
+            padding: 4px 12px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 12px;
+            font-weight: bold;
         }
-        .card-img {
-            width: calc(100% + 36px); margin: 0 -18px 15px -18px;
-            height: 180px; overflow: hidden;
-        }
+
+        .card-img { width: calc(100% + 36px); margin: 0 -18px 15px -18px; height: 180px; overflow: hidden; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
         
         .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
@@ -115,7 +112,6 @@
             padding: 12px; border-radius: 14px; font-weight: 500; margin-top: 10px;
         }
 
-        /* 機票樣式 */
         .flight-ticket {
             background: #fff; border-radius: 15px; margin-bottom: 15px;
             border-left: 8px solid var(--accent); padding: 15px;
@@ -123,30 +119,26 @@
         }
         .flight-header { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-bottom: 1px dashed #ddd; padding-bottom: 10px; margin-bottom: 10px; }
 
-        /* 底部導覽 */
+        /* 底部導覽 [黃色框修正] */
         .bottom-bar {
             position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 400px; background: rgba(28, 34, 58, 0.95);
             backdrop-filter: blur(10px); padding: 12px; border-radius: 30px;
             display: flex; justify-content: space-around; z-index: 1001;
         }
-        .nav-icon { color: rgba(255,255,255,0.6); font-size: 1.4rem; cursor: pointer; }
+        .nav-icon { color: rgba(255,255,255,0.6); font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .nav-icon.active { color: var(--secondary); }
+        .font-btn { color: white; font-weight: bold; font-size: 1.1rem; }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>OKINAWA 2026</h1>
-        <button id="font-toggle" onclick="toggleFontSize()">A+</button>
-    </header>
 
     <main>
         <div class="banner">
             <img src="沖繩cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1523413363574-c3c444a1157e?q=80&w=800'">
             <div class="banner-overlay">
                 <div style="font-size: 0.8rem; opacity: 0.8;">FEB 12 - FEB 17</div>
-                <div style="font-size: 1.4rem; font-weight: bold;">沖繩 2026 | 風獅爺!</div>
+                <div style="font-size: 1.4rem; font-weight: bold;">沖繩 2026 | 風獅爺！</div>
             </div>
         </div>
 
@@ -161,61 +153,47 @@
         </div>
 
         <div id="d1" class="content-section active">
-            <div class="card">
-                <span class="card-time">13:30 - 15:55</span>
-                <h3>泰國亞航 FD230 抵達</h3>
-                <p>那霸機場 (OKA) 抵達，準備入關並前往接駁。</p>
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴時多雲</span></div>
+                <div class="weather-temp">20° / 14°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
             </div>
+            <div class="card"><span class="card-time">13:30 - 15:55</span><h3>泰國亞航 FD230 抵達</h3><p>那霸機場 (OKA) 抵達，準備入關並前往接駁。</p></div>
             <div class="card">
                 <span class="card-time">17:00</span>
                 <div class="card-img"><img src="OTS.jpg" onerror="this.style.display='none'"></div>
                 <h3>OTS 租車領車</h3>
                 <p>辦理租車手續，確認保險與車況。</p>
                 <div class="tags"><span class="tag tag-tip">重要：備好駕照譯本</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=OTS+Rent+a+car+Naha+Airport" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至租車店</a>
-            </div>
-            <div class="card">
-                <span class="card-time">19:00</span>
-                <div class="card-img"><img src="國際通.jpg" onerror="this.style.display='none'"></div>
-                <h3>國際通散策</h3>
-                <p>沖繩最熱鬧的街道，晚餐享受居酒屋氛圍。</p>
-                <div class="tags">
-                    <span class="tag tag-food">必吃：暖暮拉麵</span>
-                    <span class="tag tag-buy">必買：雪鹽甜點</span>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Kokusai+Dori" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至國際通</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=OTS+Rent-a-car+Naha+Airport" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至租車店</a>
             </div>
         </div>
 
         <div id="d2" class="content-section">
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-cloud-sun weather-icon"></i><span>多雲轉晴</span></div>
+                <div class="weather-temp">21° / 14°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
+            </div>
             <div class="card">
-                <span class="card-time">09:30</span>
+                <span class="card-time">上午行程</span>
                 <div class="card-img"><img src="普天滿宮.jpg" onerror="this.style.display='none'"></div>
                 <h3>普天滿宮</h3>
                 <p>沖繩八社之一，著名的鐘乳石洞穴守護神。</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=普天滿宮" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Futenma+Gu" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
             <div class="card">
-                <span class="card-time">12:00</span>
+                <span class="card-time">午餐推薦</span>
                 <div class="card-img"><img src="泡瀨漁港.jpg" onerror="this.style.display='none'"></div>
-                <h3>泡瀨漁港午餐</h3>
+                <h3>泡瀨漁港</h3>
                 <div class="tags"><span class="tag tag-food">必點：烤龍蝦海膽定食</span></div>
                 <a href="https://www.google.com/maps/search/?api=1&query=Awase+Fish+Market" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
-            </div>
-            <div class="card">
-                <h3>勝連城跡 / 海中道路</h3>
-                <div class="card-img"><img src="勝連城跡.jpg" onerror="this.style.display='none'"></div>
-                <p>世界遺產與絕美跨海大橋兜風。</p>
-            </div>
-            <div class="card">
-                <h3>AEON Mall Rycom</h3>
-                <div class="card-img"><img src="AEON.jpg" onerror="this.style.display='none'"></div>
-                <div class="tags"><span class="tag tag-buy">必買：Bic Camera 電器</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=AEON+Mall+Rycom" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
         </div>
 
         <div id="d3" class="content-section">
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴朗</span></div>
+                <div class="weather-temp">23° / 16°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 30%</span></div>
+            </div>
             <div class="card">
                 <span class="card-time">08:00</span>
                 <div class="card-img"><img src="賞鯨.jpg" onerror="this.style.display='none'"></div>
@@ -227,79 +205,58 @@
                 <div class="card-img"><img src="棒球場.jpg" onerror="this.style.display='none'"></div>
                 <h3>巨人 vs 鯉魚 熱身賽</h3>
                 <p>Okinawa Cellular Stadium Naha 觀賽。</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+Cellular+Stadium" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
-            </div>
-            <div class="card">
-                <div class="card-img"><img src="美國村.jpg" onerror="this.style.display='none'"></div>
-                <h3>美國村夜景</h3>
-                <div class="tags"><span class="tag tag-food">必吃：塔可飯 Taco Rice</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=American+Village" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+Cellular+Stadium+Naha" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
         </div>
 
         <div id="d4" class="content-section">
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-cloud-sun weather-icon"></i><span>多雲</span></div>
+                <div class="weather-temp">24° / 17°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 30%</span></div>
+            </div>
             <div class="card">
                 <div class="card-img"><img src="美麗海水族館.jpg" onerror="this.style.display='none'"></div>
                 <h3>美麗海水族館</h3>
-                <div class="tags"><span class="tag tag-tip">必看：15:00 鯨鯊餵食秀</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+Churaumi+Aquarium" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+                <div class="tags"><span class="tag tag-tip">必看：鯨鯊餵食秀</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=Churaumi+Aquarium" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
             <div class="card">
                 <div class="card-img"><img src="古宇利島.jpg" onerror="this.style.display='none'"></div>
                 <h3>古宇利島</h3>
                 <div class="tags"><span class="tag tag-food">必吃：蝦蝦飯 Kouri Shrimp</span></div>
             </div>
-            <div class="card">
-                <div class="card-img"><img src="BANTA.jpg" onerror="this.style.display='none'"></div>
-                <h3>Banta Cafe</h3>
-                <p>星野集團海景咖啡廳。</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Banta+Cafe" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
-            </div>
         </div>
 
         <div id="d5" class="content-section">
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴時多雲</span></div>
+                <div class="weather-temp">24° / 17°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
+            </div>
             <div class="card">
                 <div class="card-img"><img src="波上宮.jpg" onerror="this.style.display='none'"></div>
-                <h3>波上宮</h3>
-                <p>沖繩第一神社，建在斷崖上非常壯觀。</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Naminoue+Shrine" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+                <h3>波上宮 / 護國寺</h3>
+                <a href="https://www.google.com/maps/search/?api=1&query=Naminoue+Gu" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
             <div class="card">
-                <div class="card-img"><img src="泊港市場.jpg" onerror="this.style.display='none'"></div>
-                <h3>泊港漁市場</h3>
-                <div class="tags"><span class="tag tag-food">必吃：現殺刺身、生蠔</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Tomari+Iyumachi" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
-            </div>
-            <div class="card">
+                <span class="card-time">17:00</span>
                 <div class="card-img"><img src="燒肉.jpg" onerror="this.style.display='none'"></div>
-                <h3>還車 & 燒肉大餐</h3>
-                <p>於 OTS 歌町店還車，晚餐吃和牛燒肉。</p>
-                <div class="tags"><span class="tag tag-tip">代碼：預約席 A9284</span></div>
+                <h3>OTS 還車 (歌町店)</h3>
+                <div class="tags"><span class="tag tag-tip">記得加滿油！</span></div>
             </div>
         </div>
 
         <div id="d6" class="content-section">
-            <div class="card">
-                <span class="card-time">06:40</span>
-                <h3>大廳集合</h3>
-                <p>搭乘單軌電車前往機場。</p>
+            <div class="weather-card">
+                <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴朗</span></div>
+                <div class="weather-temp">24° / 17°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
             </div>
-            <div class="card">
-                <span class="card-time">09:45</span>
-                <h3>虎航 IT231 起飛</h3>
-                <p>新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</p>
-            </div>
+            <div class="card"><span class="card-time">06:40</span><h3>大廳集合</h3><p>搭乘單軌電車前往機場。</p></div>
+            <div class="card"><span class="card-time">09:45</span><h3>虎航 IT231 起飛</h3><p>新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</p></div>
         </div>
 
         <div id="info" class="content-section">
-            <div class="flight-ticket">
-                <div class="flight-header"><span>TPE</span> ✈ <span>OKA</span></div>
-                <p>2/12 FD230 (亞航) | 20KG 行李</p>
-            </div>
-            <div class="flight-ticket">
-                <div class="flight-header"><span>OKA</span> ✈ <span>TPE</span></div>
-                <p>2/17 IT231 (虎航) | 20KG 行李</p>
-            </div>
+            <div class="flight-ticket"><div class="flight-header"><span>TPE</span> ✈︎ <span>OKA</span></div><p>2/12 FD230 (亞航) | 20KG 行李</p></div>
+            <div class="flight-ticket"><div class="flight-header"><span>OKA</span> ✈ <span>TPE</span></div><p>2/17 IT231 (虎航) | 20KG 行李</p></div>
             <div class="card">
                 <h3>住宿：La'gent Hotel</h3>
                 <div class="card-img"><img src="hotel.jpg" onerror="this.style.display='none'"></div>
@@ -314,19 +271,17 @@
     </main>
 
     <div class="bottom-bar">
-        <i class="fas fa-calendar-day nav-icon active" onclick="switchTab('d1', this)"></i>
-        <i class="fas fa-info-circle nav-icon" onclick="switchTab('info', this)"></i>
-        <i class="fas fa-arrow-up nav-icon" onclick="window.scrollTo({top:0, behavior:'smooth'})"></i>
+        <div class="nav-icon active" onclick="switchTab('d1', this)"><i class="fas fa-calendar-day"></i></div>
+        <div class="nav-icon" onclick="switchTab('info', this)"><i class="fas fa-info-circle"></i></div>
+        <div class="nav-icon font-btn" onclick="toggleFontSize()" id="font-toggle">A+</div>
     </div>
 
     <script>
         function switchTab(id, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            if(btn.classList.contains('tab-btn')) btn.classList.add('active');
-            
+            document.querySelectorAll('.nav-icon, .tab-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
