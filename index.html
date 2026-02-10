@@ -75,7 +75,7 @@
         /* 天氣卡片 - 無印良品簡約風格 */
         .weather-card {
             background: rgba(28, 34, 58, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 50px; padding: 15px 25px; margin-bottom: 20px;
+            border-radius: 30px; padding: 15px 25px; margin-bottom: 20px;
             display: flex; justify-content: space-between; align-items: center;
             color: white; border: 1px solid rgba(255,255,255,0.1);
         }
@@ -149,13 +149,15 @@
             <button class="tab-btn" onclick="switchTab('d4', this)">Day 4</button>
             <button class="tab-btn" onclick="switchTab('d5', this)">Day 5</button>
             <button class="tab-btn" onclick="switchTab('d6', this)">Day 6</button>
-            <button class="tab-btn" onclick="switchTab('info', this)">資訊</button>
         </div>
 
         <div id="d1" class="content-section active">
             <div class="weather-card">
                 <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴時多雲</span></div>
                 <div class="weather-temp">20° / 14°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
+            </div>
+            <div class="card"><span class="card-time">11:00</span><h3>桃園機場</h3><p>第一航廈集合!</p></div>
+            <div class="card">
             </div>
             <div class="card"><span class="card-time">13:30 - 15:55</span><h3>泰國亞航 FD230 抵達</h3><p>那霸機場 (OKA) 抵達，準備入關並前往接駁。</p></div>
             <div class="card">
@@ -164,7 +166,7 @@
                 <h3>OTS 租車領車</h3>
                 <p>辦理租車手續，確認保險與車況。</p>
                 <div class="tags"><span class="tag tag-tip">重要：備好駕照譯本</span></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=OTS+Rent-a-car+Naha+Airport" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至租車店</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=OTS+Rent-a-car+Naha+Airport" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
            </div>
             <div class="card">
                 <span class="card-time">19:00</span>
@@ -175,7 +177,7 @@
                     <span class="tag tag-food">必吃：暖暮拉麵</span>
                     <span class="tag tag-buy">必買：雪鹽甜點</span>
                 </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Kokusai+Dori" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至國際通</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Kokusai+Dori" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
         </div>
 
@@ -264,7 +266,7 @@
 
         <div id="d5" class="content-section">
             <div class="weather-card">
-                <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴時多雲</span></div>
+                <div class="weather-info"><i class="fas fa-cloud-sun weather-icon"></i><span>晴時多雲</span></div>
                 <div class="weather-temp">24° / 17°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
             </div>
             <div class="card">
@@ -295,11 +297,12 @@
             <div class="card"><span class="card-time">06:40</span><h3>大廳集合</h3><p>搭乘單軌電車前往機場。</p></div>
             <div class="card"><span class="card-time">09:45</span><h3>虎航 IT231 起飛</h3><p>回台灣嚕~</p></div>
             <div class="tags"><span class="tag tag-food">新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</span></div>
+            </div>
         </div>
 
         <div id="info" class="content-section">
             <div class="flight-ticket"><div class="flight-header"><span>TPE</span> ✈︎ <span>OKA</span></div><p>2/12 FD230 (亞航) | 20KG 行李</p></div>
-            <div class="flight-ticket"><div class="flight-header"><span>OKA</span> ✈ <span>TPE</span></div><p>2/17 IT231 (虎航) | 20KG 行李</p></div>
+            <div class="flight-ticket"><div class="flight-header"><span>OKA</span> ✈︎ <span>TPE</span></div><p>2/17 IT231 (虎航) | 20KG 行李</p></div>
             <div class="card">
                 <h3>住宿：La'gent Hotel</h3>
                 <div class="card-img"><img src="hotel.jpg" onerror="this.style.display='none'"></div>
@@ -353,3 +356,4 @@
 </body>
 
 </html>
+
