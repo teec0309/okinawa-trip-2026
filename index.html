@@ -3,207 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>沖繩風獅爺 2026</title>
+    <title>沖繩 2026 | 風獅爺!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #F9F8F4;    
-            --primary-orange: #B44B21; 
-            --primary-blue: #616C92;   
-            --accent-khaki: #A68F66;   
-            --text-dark: #2D2D2D;
-            --glass: rgba(255, 255, 255, 0.9);
-            --radius-lg: 24px;
-            --radius-md: 16px;
+            /* 星宇航空質感配色：深藍、香檳、橘紅 */
+            --primary: #1C223A; 
+            --secondary: #E5D4B6; 
+            --accent: #F44E1C; 
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow: 0 8px 32px 0 rgba(28, 34, 58, 0.15);
+            --text-main: #1C223A;
+            --text-light: #5a6b8c;
         }
 
-        body { font-family: "PingFang TC", sans-serif; background-color: var(--bg-color); color: var(--text-dark); margin: 0; padding-bottom: 110px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        header { padding: 40px 24px 10px; position: sticky; top: 0; background: var(--bg-color); z-index: 100; }
-        .weather-bar { background: var(--primary-blue); color: white; padding: 12px 20px; border-radius: var(--radius-md); margin: 0 24px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            margin: 0; padding: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #f0f2f5;
+            color: var(--text-main);
+            padding-bottom: 90px;
+            transition: font-size 0.3s ease;
+        }
 
-        .tab-wrapper { display: flex; overflow-x: auto; padding: 0 24px 15px; gap: 10px; scrollbar-width: none; }
-        .tab-btn { padding: 8px 20px; background: white; border: 1px solid #DDD; border-radius: 50px; white-space: nowrap; color: var(--primary-blue); font-weight: bold; cursor: pointer; }
-        .tab-btn.active { background: var(--primary-blue); color: white; }
+        /* 長輩字體放大模式 */
+        body.large-font { font-size: 1.25rem; }
+        body.large-font .card h3 { font-size: 1.5rem; }
+        body.large-font .tag { font-size: 1rem; }
 
-        .page-content { display: none; padding: 0 24px; animation: fadeIn 0.3s ease; }
-        .page-content.active { display: block; }
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(28, 34, 58, 0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
+            color: var(--secondary);
+            border-bottom: 1px solid rgba(229, 212, 182, 0.2);
+        }
 
-        /* 行程卡片樣式 */
-        .glass-card { background: var(--glass); border-radius: var(--radius-lg); margin-bottom: 25px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        .img-banner { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .time-label { display: inline-block; padding: 4px 10px; background: var(--accent-khaki); color: white; border-radius: 8px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
+        #font-toggle {
+            background: var(--accent); color: white; border: none;
+            border-radius: 50%; width: 40px; height: 40px; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(244, 78, 28, 0.3);
+        }
 
-        .nav-link { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FFF; border: 1.5px solid var(--primary-orange); color: var(--primary-orange); padding: 10px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.9rem; margin-top: 10px; }
+        main { padding: 75px 15px 20px; max-width: 500px; margin: 0 auto; }
 
-        .highlight-box { background: rgba(180, 75, 33, 0.15); border: 1.5px solid var(--primary-orange); border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; color: var(--primary-orange); display: block; text-decoration: none; font-weight: bold; }
+        .banner {
+            width: 100%; height: 180px; border-radius: 20px; overflow: hidden;
+            margin-bottom: 20px; box-shadow: var(--shadow); position: relative;
+        }
+        .banner img { width: 100%; height: 100%; object-fit: cover; }
+        .banner-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px; color: white;
+        }
 
-        /* 機票與資訊 */
-        .ticket { background: #616C92; color: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 6px solid var(--primary-orange); position: relative; }
-        .ticket::after { content: ""; position: absolute; right: 28%; top: 0; bottom: 0; border-left: 1px dashed rgba(255,255,255,0.4); }
-        .t-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        /* 導覽頁籤 */
+        .tabs {
+            display: flex; overflow-x: auto; gap: 8px; padding-bottom: 15px;
+            position: sticky; top: 64px; z-index: 999; background: transparent;
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border); padding: 8px 18px;
+            border-radius: 20px; white-space: nowrap; font-weight: 500;
+            color: var(--primary); transition: 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--primary); color: var(--secondary); transform: scale(1.05);
+        }
 
-        .bottom-nav { position: fixed; bottom: 20px; left: 15px; right: 15px; height: 70px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 35px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; }
-        .nav-item { color: #999; text-align: center; font-size: 0.7rem; flex: 1; }
-        .nav-item.active { color: var(--primary-orange); }
-        .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 3px; }
-
+        .content-section { display: none; animation: fadeIn 0.4s ease; }
+        .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 行程卡片 */
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            padding: 18px; margin-bottom: 20px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .card-time {
+            display: inline-block; background: var(--primary); color: var(--secondary);
+            padding: 3px 10px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 10px;
+        }
+        .card-img {
+            width: calc(100% + 36px); margin: 0 -18px 15px -18px;
+            height: 180px; overflow: hidden;
+        }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+        .tag { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; font-weight: 600; }
+        .tag-food { background: #FFE8E1; color: #D3411A; }
+        .tag-buy { background: #F1EADF; color: #7A694D; }
+        .tag-tip { background: #E1E6F0; color: #1C223A; }
+
+        .btn-nav {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--primary); color: white; text-decoration: none;
+            padding: 12px; border-radius: 14px; font-weight: 500; margin-top: 10px;
+        }
+
+        /* 機票樣式 */
+        .flight-ticket {
+            background: #fff; border-radius: 15px; margin-bottom: 15px;
+            border-left: 8px solid var(--accent); padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .flight-header { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-bottom: 1px dashed #ddd; padding-bottom: 10px; margin-bottom: 10px; }
+
+        /* 底部導覽 */
+        .bottom-bar {
+            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px; background: rgba(28, 34, 58, 0.95);
+            backdrop-filter: blur(10px); padding: 12px; border-radius: 30px;
+            display: flex; justify-content: space-around; z-index: 1001;
+        }
+        .nav-icon { color: rgba(255,255,255,0.6); font-size: 1.4rem; cursor: pointer; }
+        .nav-icon.active { color: var(--secondary); }
     </style>
 </head>
 <body>
 
-<header>
-    <h1 style="margin:0;">沖繩風獅爺</h1>
-</header>
+    <header>
+        <h1>OKINAWA 2026</h1>
+        <button id="font-toggle" onclick="toggleFontSize()">A+</button>
+    </header>
 
-<div class="weather-bar">
-    <span><i class="fas fa-cloud-sun"></i> 那霸即時天氣</span>
-    <span id="temp-val">--°C</span>
-</div>
-
-<div id="page-itinerary" class="page-content active">
-    <div class="tab-wrapper">
-        <div class="tab-btn active" onclick="switchDay(1)">D1</div>
-        <div class="tab-btn" onclick="switchDay(2)">D2</div>
-        <div class="tab-btn" onclick="switchDay(3)">D3</div>
-        <div class="tab-btn" onclick="switchDay(4)">D4</div>
-        <div class="tab-btn" onclick="switchDay(5)">D5</div>
-        <div class="tab-btn" onclick="switchDay(6)">D6</div>
-    </div>
-
-    <div id="day-box">
+    <main>
+        <div class="banner">
+            <img src="沖繩cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1523413363574-c3c444a1157e?q=80&w=800'">
+            <div class="banner-overlay">
+                <div style="font-size: 0.8rem; opacity: 0.8;">FEB 12 - FEB 17</div>
+                <div style="font-size: 1.4rem; font-weight: bold;">沖繩 2026 | 風獅爺!</div>
+            </div>
         </div>
-</div>
 
-<div id="page-wallet" class="page-content">
-    <h3>💴 支出紀錄 (JPY)</h3>
-    <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-        <input type="text" id="itemName" placeholder="項目" style="flex:2; padding:10px; border-radius:10px; border:1px solid #DDD;">
-        <input type="number" id="itemPrice" placeholder="金額" style="flex:1; padding:10px; border-radius:10px; border:1px solid #DDD;">
-        <button onclick="addExpense()" style="background:var(--primary-orange); color:white; border:none; border-radius:10px; width:45px;">+</button>
-    </div>
-    <div id="expenseList"></div>
-</div>
-
-<div id="page-info" class="page-content">
-    <div class="ticket">
-        <div class="t-row"><span>泰國亞航 FD230 (去)</span><span>02/12</span></div>
-        <div class="t-row"><div>TPE<br><small>13:30</small></div><i class="fas fa-plane"></i><div>OKA<br><small>15:55</small></div></div>
-    </div>
-    <div class="ticket">
-        <div class="t-row"><span>台灣虎航 IT231 (回)</span><span>02/17</span></div>
-        <div class="t-row"><div>OKA<br><small>09:45</small></div><i class="fas fa-plane" style="transform:rotate(180deg)"></i><div>TPE<br><small>10:45</small></div></div>
-    </div>
-
-    <div class="glass-card">
-        <img src="https://r-light.jp/naha/wp-content/uploads/sites/2/2021/01/la_gent_naha_exterior_01.jpg" class="img-banner">
-        <div class="card-body">
-            <h3>La'gent Hotel Naha</h3>
-            <p>2 Chome-2-9 Matsuyama, Naha</p>
-            <a href="tel:+81988945600" class="nav-link"><i class="fas fa-phone"></i> 撥打飯店電話</a>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('d1', this)">Day 1</button>
+            <button class="tab-btn" onclick="switchTab('d2', this)">Day 2</button>
+            <button class="tab-btn" onclick="switchTab('d3', this)">Day 3</button>
+            <button class="tab-btn" onclick="switchTab('d4', this)">Day 4</button>
+            <button class="tab-btn" onclick="switchTab('d5', this)">Day 5</button>
+            <button class="tab-btn" onclick="switchTab('d6', this)">Day 6</button>
+            <button class="tab-btn" onclick="switchTab('info', this)">資訊</button>
         </div>
-    </div>
 
-    <div class="glass-card" style="padding:20px; background:rgba(180, 75, 33, 0.05);">
-        <h4 style="margin:0 0 10px 0; color:var(--primary-orange);">🚨 緊急資訊</h4>
-        報警: 110 / 急救: 119<br>
-        駐日辦事處: +81 98-862-5536
-    </div>
-</div>
-
-<div class="bottom-nav">
-    <div class="nav-item active" id="nav-itinerary" onclick="switchPage('itinerary')"><i class="fas fa-calendar-alt"></i>行程</div>
-    <div class="nav-item" id="nav-wallet" onclick="switchPage('wallet')"><i class="fas fa-coins"></i>記帳</div>
-    <div class="nav-item" id="nav-info" onclick="switchPage('info')"><i class="fas fa-info-circle"></i>資訊</div>
-    <div class="nav-item" onclick="changeFontSize()"><i class="fas fa-font"></i>放大</div>
-</div>
-
-<script>
-    const allDays = {
-        1: [
-            { time: "15:55", title: "抵達那霸機場", desc: "領取行李，前往 OTS 租車接駁處。", img: "https://images.unsplash.com/photo-1559480671-12eeee334766?w=600", map: "Naha+Airport" },
-            { time: "17:00", title: "OTS 租車(臨空豐崎店)", desc: "領取車輛，開啟沖繩自駕之旅。", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", map: "OTS+Rent-a-car+Rinku+Toyosaki" },
-            { time: "19:00", title: "國際通 & 居酒屋", desc: "逛逛最熱鬧的街，吃大眾酒場居酒屋。", img: "https://images.unsplash.com/photo-1621259533310-907604be124e?w=600", map: "Kokusai+Dori" }
-        ],
-        2: [
-            { time: "09:30", title: "出雲大社沖繩分社", desc: "參拜祈福，體驗沖繩神社氛圍。", img: "https://images.unsplash.com/photo-1570114132601-579047915e75?w=600", map: "Izumo+Taisha+Okinawa" },
-            { time: "11:30", title: "普天滿宮", desc: "參觀神祕的鐘乳石洞穴神社。", img: "https://images.unsplash.com/photo-1506190500382-d27e253582ba?w=600", map: "Futenma+Shrine" },
-            { time: "13:00", title: "泡瀨漁港", desc: "享用新鮮龍蝦與海鮮料理。", img: "https://images.unsplash.com/photo-1560263816-d704d83cce0f?w=600", map: "Awase+Fish+Market" }
-        ],
-        3: [
-            { time: "10:00", title: "美麗海水族館", desc: "看巨大的黑潮之海鯨鯊。", img: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?w=600", map: "Churaumi+Aquarium" },
-            { time: "14:00", title: "古宇利島", desc: "跨過美麗的海中大橋，吃蝦蝦飯。", img: "https://images.unsplash.com/photo-1506190500382-d27e253582ba?w=600", map: "Kouri+Bridge" }
-        ],
-        4: [
-            { time: "08:05", title: "賞鯨集合 (Prince Smart Inn)", desc: "橘色特別標註：請在此集合搭乘專車。", img: "https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=600", map: "Prince+Smart+Inn+Naha", special: true },
-            { time: "08:30", title: "冬春限定賞鯨", desc: "出海追蹤座頭鯨的震撼畫面。", img: "https://images.unsplash.com/photo-1506190500382-d27e253582ba?w=600", map: "Naha+Port" }
-        ],
-        5: [
-            { time: "10:00", title: "波上宮", desc: "沖繩總鎮守，懸崖上的美麗神社。", img: "https://images.unsplash.com/photo-1570114132601-579047915e75?w=600", map: "Naminoue+Shrine" },
-            { time: "15:00", title: "小祿站 AEON", desc: "最後大採買，藥妝、超市一次買足。", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", map: "AEON+Naha+Shopping+Center" }
-        ],
-        6: [
-            { time: "07:30", title: "那霸機場回程", desc: "辦理登機，準備返回台灣。", img: "https://images.unsplash.com/photo-1559480671-12eeee334766?w=600", map: "Naha+Airport" }
-        ]
-    };
-
-    function switchDay(d) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        const box = document.getElementById('day-box');
-        box.innerHTML = '';
-        allDays[d].forEach(item => {
-            box.innerHTML += `
-                <div class="${item.special ? 'highlight-box' : 'glass-card'}">
-                    ${item.img ? `<img src="${item.img}" class="img-banner">` : ''}
-                    <div class="card-body">
-                        <span class="time-label">${item.time}</span>
-                        <h3 style="margin:5px 0;">${item.title}</h3>
-                        <p style="font-size:0.85rem; color:#666;">${item.desc}</p>
-                        <a href="https://www.google.com/maps/search/?api=1&query=${item.map}" class="nav-link"><i class="fas fa-location-arrow"></i> 導航景點</a>
-                    </div>
+        <div id="d1" class="content-section active">
+            <div class="card">
+                <span class="card-time">13:30 - 15:55</span>
+                <h3>泰國亞航 FD230 抵達</h3>
+                <p>那霸機場 (OKA) 抵達，準備入關並前往接駁。</p>
+            </div>
+            <div class="card">
+                <span class="card-time">17:00</span>
+                <div class="card-img"><img src="OTS.jpg" onerror="this.style.display='none'"></div>
+                <h3>OTS 租車領車</h3>
+                <p>辦理租車手續，確認保險與車況。</p>
+                <div class="tags"><span class="tag tag-tip">重要：備好駕照譯本</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=OTS+Rent+a+car+Naha+Airport" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至租車店</a>
+            </div>
+            <div class="card">
+                <span class="card-time">19:00</span>
+                <div class="card-img"><img src="國際通.jpg" onerror="this.style.display='none'"></div>
+                <h3>國際通散策</h3>
+                <p>沖繩最熱鬧的街道，晚餐享受居酒屋氛圍。</p>
+                <div class="tags">
+                    <span class="tag tag-food">必吃：暖暮拉麵</span>
+                    <span class="tag tag-buy">必買：雪鹽甜點</span>
                 </div>
-            `;
-        });
-    }
+                <a href="https://www.google.com/maps/search/?api=1&query=Kokusai+Dori" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航至國際通</a>
+            </div>
+        </div>
 
-    function switchPage(p) {
-        document.querySelectorAll('.page-content').forEach(pc => pc.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(ni => ni.classList.remove('active'));
-        document.getElementById('page-'+p).classList.add('active');
-        document.getElementById('nav-'+p).classList.add('active');
-    }
+        <div id="d2" class="content-section">
+            <div class="card">
+                <span class="card-time">09:30</span>
+                <div class="card-img"><img src="普天滿宮.jpg" onerror="this.style.display='none'"></div>
+                <h3>普天滿宮</h3>
+                <p>沖繩八社之一，著名的鐘乳石洞穴守護神。</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=普天滿宮" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <span class="card-time">12:00</span>
+                <div class="card-img"><img src="泡瀨漁港.jpg" onerror="this.style.display='none'"></div>
+                <h3>泡瀨漁港午餐</h3>
+                <div class="tags"><span class="tag tag-food">必點：烤龍蝦海膽定食</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=Awase+Fish+Market" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <h3>勝連城跡 / 海中道路</h3>
+                <div class="card-img"><img src="勝連城跡.jpg" onerror="this.style.display='none'"></div>
+                <p>世界遺產與絕美跨海大橋兜風。</p>
+            </div>
+            <div class="card">
+                <h3>AEON Mall Rycom</h3>
+                <div class="card-img"><img src="AEON.jpg" onerror="this.style.display='none'"></div>
+                <div class="tags"><span class="tag tag-buy">必買：Bic Camera 電器</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=AEON+Mall+Rycom" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+        </div>
 
-    function addExpense() {
-        const n = document.getElementById('itemName').value;
-        const p = document.getElementById('itemPrice').value;
-        if(!n || !p) return;
-        const div = document.createElement('div');
-        div.className = 'glass-card';
-        div.style.padding = '10px';
-        div.style.marginBottom = '5px';
-        div.innerHTML = `<div style="display:flex; justify-content:space-between"><span>${n}</span><b>¥${p}</b></div>`;
-        document.getElementById('expenseList').prepend(div);
-        document.getElementById('itemName').value=''; document.getElementById('itemPrice').value='';
-    }
+        <div id="d3" class="content-section">
+            <div class="card">
+                <span class="card-time">08:00</span>
+                <div class="card-img"><img src="賞鯨.jpg" onerror="this.style.display='none'"></div>
+                <h3>冬日限定賞鯨</h3>
+                <p>那霸港集合，出發尋找座頭鯨。</p>
+            </div>
+            <div class="card">
+                <span class="card-time">13:00</span>
+                <div class="card-img"><img src="棒球場.jpg" onerror="this.style.display='none'"></div>
+                <h3>巨人 vs 鯉魚 熱身賽</h3>
+                <p>Okinawa Cellular Stadium Naha 觀賽。</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+Cellular+Stadium" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="美國村.jpg" onerror="this.style.display='none'"></div>
+                <h3>美國村夜景</h3>
+                <div class="tags"><span class="tag tag-food">必吃：塔可飯 Taco Rice</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=American+Village" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+        </div>
 
-    let fSize = 16;
-    function changeFontSize() { fSize = fSize >= 24 ? 16 : fSize + 4; document.body.style.fontSize = fSize + 'px'; }
+        <div id="d4" class="content-section">
+            <div class="card">
+                <div class="card-img"><img src="美麗海水族館.jpg" onerror="this.style.display='none'"></div>
+                <h3>美麗海水族館</h3>
+                <div class="tags"><span class="tag tag-tip">必看：15:00 鯨鯊餵食秀</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+Churaumi+Aquarium" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="古宇利島.jpg" onerror="this.style.display='none'"></div>
+                <h3>古宇利島</h3>
+                <div class="tags"><span class="tag tag-food">必吃：蝦蝦飯 Kouri Shrimp</span></div>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="BANTA.jpg" onerror="this.style.display='none'"></div>
+                <h3>Banta Cafe</h3>
+                <p>星野集團海景咖啡廳。</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Banta+Cafe" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+        </div>
 
-    async function fetchWeather() {
-        try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&current_weather=true');
-            const data = await res.json();
-            document.getElementById('temp-val').innerText = data.current_weather.temperature + "°C";
-        } catch(e) { document.getElementById('temp-val').innerText = "22°C"; }
-    }
+        <div id="d5" class="content-section">
+            <div class="card">
+                <div class="card-img"><img src="波上宮.jpg" onerror="this.style.display='none'"></div>
+                <h3>波上宮</h3>
+                <p>沖繩第一神社，建在斷崖上非常壯觀。</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Naminoue+Shrine" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="泊港市場.jpg" onerror="this.style.display='none'"></div>
+                <h3>泊港漁市場</h3>
+                <div class="tags"><span class="tag tag-food">必吃：現殺刺身、生蠔</span></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=Tomari+Iyumachi" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="燒肉.jpg" onerror="this.style.display='none'"></div>
+                <h3>還車 & 燒肉大餐</h3>
+                <p>於 OTS 歌町店還車，晚餐吃和牛燒肉。</p>
+                <div class="tags"><span class="tag tag-tip">代碼：預約席 A9284</span></div>
+            </div>
+        </div>
 
-    // 初始化顯示第一天與天氣
-    switchDay(1);
-    fetchWeather();
-</script>
+        <div id="d6" class="content-section">
+            <div class="card">
+                <span class="card-time">06:40</span>
+                <h3>大廳集合</h3>
+                <p>搭乘單軌電車前往機場。</p>
+            </div>
+            <div class="card">
+                <span class="card-time">09:45</span>
+                <h3>虎航 IT231 起飛</h3>
+                <p>新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</p>
+            </div>
+        </div>
 
+        <div id="info" class="content-section">
+            <div class="flight-ticket">
+                <div class="flight-header"><span>TPE</span> ✈ <span>OKA</span></div>
+                <p>2/12 FD230 (亞航) | 20KG 行李</p>
+            </div>
+            <div class="flight-ticket">
+                <div class="flight-header"><span>OKA</span> ✈ <span>TPE</span></div>
+                <p>2/17 IT231 (虎航) | 20KG 行李</p>
+            </div>
+            <div class="card">
+                <h3>住宿：La'gent Hotel</h3>
+                <div class="card-img"><img src="hotel.jpg" onerror="this.style.display='none'"></div>
+                <p>那霸市松山 2-2-9 | +81 98-894-5600</p>
+            </div>
+            <div class="card">
+                <h3>重要電話</h3>
+                <p>緊急：110 / 119</p>
+                <p>駐那霸辦事處 緊急電話：+81-80-8056-0122</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="bottom-bar">
+        <i class="fas fa-calendar-day nav-icon active" onclick="switchTab('d1', this)"></i>
+        <i class="fas fa-info-circle nav-icon" onclick="switchTab('info', this)"></i>
+        <i class="fas fa-arrow-up nav-icon" onclick="window.scrollTo({top:0, behavior:'smooth'})"></i>
+    </div>
+
+    <script>
+        function switchTab(id, btn) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if(btn.classList.contains('tab-btn')) btn.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        let isLarge = false;
+        function toggleFontSize() {
+            isLarge = !isLarge;
+            document.body.classList.toggle('large-font');
+            document.getElementById('font-toggle').innerText = isLarge ? "A-" : "A+";
+        }
+    </script>
 </body>
 </html>
