@@ -75,7 +75,7 @@
         /* 天氣卡片 - 無印良品簡約風格 */
         .weather-card {
             background: rgba(28, 34, 58, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px; padding: 15px 25px; margin-bottom: 20px;
+            border-radius: 50px; padding: 15px 25px; margin-bottom: 20px;
             display: flex; justify-content: space-between; align-items: center;
             color: white; border: 1px solid rgba(255,255,255,0.1);
         }
@@ -155,10 +155,14 @@
             <div class="weather-card">
                 <div class="weather-info"><i class="fas fa-sun weather-icon"></i><span>晴時多雲</span></div>
                 <div class="weather-temp">20° / 14°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
-            </div>
-            <div class="card"><span class="card-time">11:00</span><h3>桃園機場</h3><p>第一航廈集合!</p></div>
+           </div>
             <div class="card">
-            </div>
+                <span class="card-time">11:00</span>
+                <div class="card-img"><img src="airport.jpg" onerror="this.style.display='none'"></div>
+                <h3>桃園機場</h3>
+                <p>11:00前 第一航廈集合!</p>
+                <div class="tags"><span class="tag tag-tip">年假前機場多人，建議提早到達！</span></div>
+           </div>
             <div class="card"><span class="card-time">13:30 - 15:55</span><h3>泰國亞航 FD230 抵達</h3><p>那霸機場 (OKA) 抵達，準備入關並前往接駁。</p></div>
             <div class="card">
                 <span class="card-time">17:00</span>
@@ -208,7 +212,7 @@
             <div class="card">
                 <h3>AEON Mall Rycom</h3>
                 <div class="card-img"><img src="AEON.jpg" onerror="this.style.display='none'"></div>
-                <div class="tags"><span class="tag tag-buy">必買：Bic Camera 電器</span></div>
+                <div class="tags"><span class="tag tag-buy">Bic Camera 電器 / 逛超市</span></div>
                 <a href="https://www.google.com/maps/search/?api=1&query=AEON+Mall+Rycom" target="_blank" class="btn-nav"><i class="fas fa-location-arrow"></i> 導航</a>
             </div>
         </div>
@@ -222,7 +226,7 @@
                 <span class="card-time">08:00</span>
                 <div class="card-img"><img src="賞鯨.jpg" onerror="this.style.display='none'"></div>
                 <h3>冬日限定賞鯨</h3>
-                <p>那霸港集合，出發尋找座頭鯨。</p>
+                <p>那霸港集合，出發尋找座頭鯨!</p>
                 <div class="tags"><span class="tag tag-buy">8:00 Prince Smart Inn集合</span></div>
             </div>
             <div class="card">
@@ -295,8 +299,8 @@
                 <div class="weather-temp">24° / 17°C <span style="font-size: 0.8rem; opacity: 0.7; margin-left: 5px;">降雨 20%</span></div>
             </div>
             <div class="card"><span class="card-time">06:40</span><h3>大廳集合</h3><p>搭乘單軌電車前往機場。</p></div>
-            <div class="card"><span class="card-time">09:45</span><h3>虎航 IT231 起飛</h3><p>回台灣嚕~</p></div>
-                <div class="tags"><span class="tag tag-food">新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</span></div>
+            <div class="card"><span class="card-time">09:45</span><h3>虎航 IT231 起飛</h3><p>回台灣嚕~</p>
+            <div class="tags"><span class="tag tag-food">新年快樂!!恭喜發財!!身體健康!!萬事如意!!馬佛勒斯2026!!!</span></div>
             </div>
         </div>
 
@@ -356,6 +360,7 @@
 </body>
 
 </html>
+
 
 
 
